@@ -1,15 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="noJS" lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JS</title>
+
+    <title>Rock / Paper / Scissors</title>
+
+    <script>
+        const hasJS = function() {
+            const htmlTag = document.getElementsByTagName('html')[0];
+            const htmlClass = htmlTag.className.replace('noJS', 'hasJS');
+            htmlTag.className = htmlClass;
+        }();
+    </script>
 </head>
 <body>
-    <script>
-        let playerSelection = "ROCK";
-        let computerSelection = getComputerChoice();
+    <!-- START : content -->
+    <div id="content">
+
+        <h1>Rock / Paper / Scissors</h1>
+
+        <h3>Manche <span id="round">1</span> / 5</h3>
+
+        <h2>Résultats : </h2>    
+        <div id="results">
+            
+        </div>
+
+        <h2>Score :</h2>
+        <div id="score">
+            <p>PLAYER <span id="playerScore">0</span> / COMPUTER <span id="compScore">0</span></p>
+        </div>
+
+
+        <button class="btn" data-value="rock">👊 Rock</button>
+        <button class="btn" data-value="paper">✋ Paper</button>
+        <button class="btn" data-value="scissors">✌️ Scissors</button>
+    </div>
+    <!-- END : content -->
+
+
+    <!-- START : scripts -->
+    <script>    
+        let playerSelection = "Rock";
+        let computerInput = getComputerChoice();
+        let compScore = 0;
+        let playerScore = 0
+
+        const results = document.querySelector('#results');
+        const playerScoreDisplay = document.querySelector('#playerScore');
+        const compScoreDisplay = document.querySelector('#compScore');
+        const buttons = document.querySelectorAll('.btn');
+        const round = document.querySelector('#round')
+
 
         function getComputerChoice(){
             let choices = ['Rock', 'Paper', 'Scissors']
@@ -20,28 +65,28 @@
         }
 
         function playRound(playerSelection, computerSelection) {
-            let compScore = 0;
-            let playerScore = 0
+            
 
-            console.log(computerSelection);
+            results.innerHTML = '<p>'+ playerSelection + '</p><p>'+ computerSelection + '</p>'
+
+            //console.log(playerSelection);
+            //console.log(computerSelection)
 
             if (playerSelection.toLowerCase() === computerSelection.toLowerCase()) {
-                //tie!
+                results.innerHTML += "<p>égalité!</p>"
             } else if ((playerSelection.toLowerCase() === "rock" && computerSelection.toLowerCase() === "scissors") || 
                         (playerSelection.toLowerCase() === "scissors" && computerSelection === "paper" ) ||
                         (playerSelection.toLowerCase() === "paper" && computerSelection === "rock" )) {
-               playerScore = 1;
+               playerScore++;
+               results.innerHTML += "<p>Le gagnat du round est le player</p>"
 
             } else {
-                compScore = 1;
-
+                compScore++;
+                results.innerHTML += "<p>Le gagnat du round est le comptuer</p>"
             }
 
-            if(playerScore > compScore) {
-                return "Le gagnat du round est le player"
-            } else {
-                return "Le gagnat du round est le comptuer"
-            }
+            playerScoreDisplay.innerHTML = playerScore;
+            compScoreDisplay.innerHTML = compScore;
 
         }
             
@@ -54,7 +99,41 @@
             }
         }
 
-        game();
+        //game();
+
+        let i = 1;
+
+        buttons.forEach(button => button.addEventListener('click', function(e){
+            let value = this.dataset.value;
+            let valueComp = getComputerChoice();
+
+            if (i < 5) {
+                playRound(value, valueComp);
+                round.innerHTML = i;
+                i++
+            } else if (i == 5) { 
+                playRound(value, valueComp);
+                round.innerHTML = i;
+                i++
+                let finalPlayerScore = playerScoreDisplay.innerHTML;
+                let finalCompScore = compScoreDisplay.innerHTML;
+
+                if(finalPlayerScore > finalCompScore){
+                    console.log('Victoire du player')
+                } else if(finalPlayerScore < finalCompScore){ 
+                    console.log('Victoire du comp');
+                } else {
+                    console.log('égalité')
+                }
+
+                console.log('Fin du game');
+
+
+            }
+
+
+            
+        }));
 
 
     </script>
