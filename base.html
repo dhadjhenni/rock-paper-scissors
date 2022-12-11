@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS</title>
+</head>
+<body>
+    <script>
+        let playerSelection = "ROCK";
+        let computerSelection = getComputerChoice();
+
+        function getComputerChoice(){
+            let choices = ['Rock', 'Paper', 'Scissors']
+
+            let x = Math.floor(Math.random() * choices.length);
+
+            return choices[x];
+        }
+
+        function playRound(playerSelection, computerSelection) {
+            let compScore = 0;
+            let playerScore = 0
+
+            console.log(computerSelection);
+
+            if (playerSelection.toLowerCase() === computerSelection.toLowerCase()) {
+                //tie!
+            } else if ((playerSelection.toLowerCase() === "rock" && computerSelection.toLowerCase() === "scissors") || 
+                        (playerSelection.toLowerCase() === "scissors" && computerSelection === "paper" ) ||
+                        (playerSelection.toLowerCase() === "paper" && computerSelection === "rock" )) {
+               playerScore = 1;
+
+            } else {
+                compScore = 1;
+
+            }
+
+            if(playerScore > compScore) {
+                return "Le gagnat du round est le player"
+            } else {
+                return "Le gagnat du round est le comptuer"
+            }
+
+        }
+            
+        function game() {
+
+            for (let i = 0; i < 5; i++) {
+                let computerSelection = getComputerChoice();
+                
+                console.log("Game "+i+" :"+ playRound(playerSelection, computerSelection));
+            }
+        }
+
+        game();
+
+
+    </script>
+</body>
+</html>
