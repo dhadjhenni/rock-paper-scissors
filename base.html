@@ -5,59 +5,81 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Fredoka+One&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles/styles.css" />
 
     <title>Rock / Paper / Scissors</title>
 
     <script>
-        const hasJS = function() {
+        const hasJS = function () {
             const htmlTag = document.getElementsByTagName('html')[0];
             const htmlClass = htmlTag.className.replace('noJS', 'hasJS');
             htmlTag.className = htmlClass;
         }();
     </script>
 </head>
+
 <body>
     <!-- START : content -->
     <div id="content">
 
         <h1>Rock / Paper / Scissors</h1>
 
-        <h3>Manche <span id="round">1</span> / 5</h3>
+        <main>
+            <h3 class="round">Manche <span id="round">1</span> / 5</h3>
 
-        <h2>Résultats : </h2>    
-        <div id="results">
-            
-        </div>
+            <h2>Résultats : </h2>
+            <div id="results">
 
-        <h2>Score :</h2>
-        <div id="score">
-            <p>PLAYER <span id="playerScore">0</span> / COMPUTER <span id="compScore">0</span></p>
-        </div>
+            </div>
+
+            <h2>Score :</h2>
+            <div id="score">
+                <p>PLAYER <span id="playerScore">0</span> / COMPUTER <span id="compScore">0</span></p>
+            </div>
 
 
-        <button class="btn" data-value="rock">👊 Rock</button>
-        <button class="btn" data-value="paper">✋ Paper</button>
-        <button class="btn" data-value="scissors">✌️ Scissors</button>
+            <div class="actions">
+                <button class="btn" data-value="rock">👊 Rock</button>
+                <button class="btn" data-value="paper">✋ Paper</button>
+                <button class="btn" data-value="scissors">✌️ Scissors</button>
+            </div>
+        </main>
     </div>
     <!-- END : content -->
 
+    <!-- START : footer -->
+    <footer>
+        <p>
+            Copyright 2023 -
+            <a href="http://www.dhh.me">dhh.me</a> /
+            <a href="https://github.com/dhadjhenni">Github</a>
+        </p>
+    </footer>
+    <!-- END : footer -->
+
 
     <!-- START : scripts -->
-    <script>    
+    <script>
         let playerSelection = "Rock";
         let computerInput = getComputerChoice();
         let compScore = 0;
-        let playerScore = 0
+        let playerScore = 0;
 
-        const results = document.querySelector('#results');
-        const playerScoreDisplay = document.querySelector('#playerScore');
-        const compScoreDisplay = document.querySelector('#compScore');
-        const buttons = document.querySelectorAll('.btn');
-        const round = document.querySelector('#round')
+        const results = document.querySelector("#results");
+        const playerScoreDisplay = document.querySelector("#playerScore");
+        const compScoreDisplay = document.querySelector("#compScore");
+        const buttons = document.querySelectorAll(".btn");
+        const round = document.querySelector("#round");
 
-
-        function getComputerChoice(){
-            let choices = ['Rock', 'Paper', 'Scissors']
+        function getComputerChoice() {
+            let choices = ["Rock", "Paper", "Scissors"];
 
             let x = Math.floor(Math.random() * choices.length);
 
@@ -65,37 +87,40 @@
         }
 
         function playRound(playerSelection, computerSelection) {
-            
-
-            results.innerHTML = '<p>'+ playerSelection + '</p><p>'+ computerSelection + '</p>'
+            results.innerHTML =
+                "<p>" + playerSelection + "</p><p>" + computerSelection + "</p>";
 
             //console.log(playerSelection);
             //console.log(computerSelection)
 
             if (playerSelection.toLowerCase() === computerSelection.toLowerCase()) {
-                results.innerHTML += "<p>égalité!</p>"
-            } else if ((playerSelection.toLowerCase() === "rock" && computerSelection.toLowerCase() === "scissors") || 
-                        (playerSelection.toLowerCase() === "scissors" && computerSelection === "paper" ) ||
-                        (playerSelection.toLowerCase() === "paper" && computerSelection === "rock" )) {
-               playerScore++;
-               results.innerHTML += "<p>Le gagnat du round est le player</p>"
-
+                results.innerHTML += "<p>égalité!</p>";
+            } else if (
+                (playerSelection.toLowerCase() === "rock" &&
+                    computerSelection.toLowerCase() === "scissors") ||
+                (playerSelection.toLowerCase() === "scissors" &&
+                    computerSelection === "paper") ||
+                (playerSelection.toLowerCase() === "paper" &&
+                    computerSelection === "rock")
+            ) {
+                playerScore++;
+                results.innerHTML += "<p>Le gagnat du round est le player</p>";
             } else {
                 compScore++;
-                results.innerHTML += "<p>Le gagnat du round est le comptuer</p>"
+                results.innerHTML += "<p>Le gagnat du round est le comptuer</p>";
             }
 
             playerScoreDisplay.innerHTML = playerScore;
             compScoreDisplay.innerHTML = compScore;
-
         }
-            
-        function game() {
 
+        function game() {
             for (let i = 0; i < 5; i++) {
                 let computerSelection = getComputerChoice();
-                
-                console.log("Game "+i+" :"+ playRound(playerSelection, computerSelection));
+
+                console.log(
+                    "Game " + i + " :" + playRound(playerSelection, computerSelection)
+                );
             }
         }
 
@@ -103,39 +128,38 @@
 
         let i = 1;
 
-        buttons.forEach(button => button.addEventListener('click', function(e){
-            let value = this.dataset.value;
-            let valueComp = getComputerChoice();
+        buttons.forEach((button) =>
+            button.addEventListener("click", function (e) {
+                let value = this.dataset.value;
+                let valueComp = getComputerChoice();
 
-            if (i < 5) {
-                playRound(value, valueComp);
-                round.innerHTML = i;
-                i++
-            } else if (i == 5) { 
-                playRound(value, valueComp);
-                round.innerHTML = i;
-                i++
-                let finalPlayerScore = playerScoreDisplay.innerHTML;
-                let finalCompScore = compScoreDisplay.innerHTML;
+                if (i < 5) {
+                    playRound(value, valueComp);
+                    round.innerHTML = i;
+                    i++;
+                } else if (i == 5) {
+                    playRound(value, valueComp);
+                    round.innerHTML = i;
+                    i++;
+                    let finalPlayerScore = playerScoreDisplay.innerHTML;
+                    let finalCompScore = compScoreDisplay.innerHTML;
 
-                if(finalPlayerScore > finalCompScore){
-                    console.log('Victoire du player')
-                } else if(finalPlayerScore < finalCompScore){ 
-                    console.log('Victoire du comp');
-                } else {
-                    console.log('égalité')
+                    if (finalPlayerScore > finalCompScore) {
+                        console.log("Victoire du player");
+                    } else if (finalPlayerScore < finalCompScore) {
+                        console.log("Victoire du comp");
+                    } else {
+                        console.log("égalité");
+                    }
+
+                    console.log("Fin du game");
                 }
+            })
+        );
 
-                console.log('Fin du game');
-
-
-            }
-
-
-            
-        }));
 
 
     </script>
 </body>
+
 </html>
